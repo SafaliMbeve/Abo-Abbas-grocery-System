@@ -5,18 +5,6 @@
 Checkout is a dedicated `/checkout` page linked from the cart. Customers can pay through Flutterwave's hosted Zambian mobile-money authorization flow or Stripe Checkout for card payments. The server creates a pending Sanity order, verifies successful payments with the selected provider, and only marks an order paid after confirmation. Product stock is checked when checkout starts and any tracked stock is decremented once on confirmed payment.
 After a Stripe Checkout payment, Stripe returns directly to `/checkout/successful` with its Checkout Session ID. The page verifies the paid session server-side, confirms the order in Sanity, and shows a receipt with the invoice/order number, purchased items, total, payment date, and delivery address. Receipt details are only shown to the signed-in owner of the paid order.
 
-Copy `.env.example` to `.env.local` and add the required values before testing:
-
-```dotenv
-FLUTTERWAVE_SECRET_KEY=FLWSECK_TEST-...
-FLUTTERWAVE_WEBHOOK_HASH=your-webhook-secret-hash
-STRIPE_SECRET_KEY=sk_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-ENABLE_DEMO_PAYMENTS=true
-NEXT_PUBLIC_ENABLE_DEMO_PAYMENTS=true
-SANITY_API_WRITE_TOKEN=your-sanity-write-token
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
 
 - Create a Flutterwave merchant account, enable Zambia mobile-money payments, and use test keys first. Configure the Flutterwave webhook URL as `https://your-domain.example/api/payments/flutterwave/webhook`; set the same webhook secret hash in `FLUTTERWAVE_WEBHOOK_HASH`.
 - Create a Stripe account that can process ZMW payments, use test keys first, and configure `https://your-domain.example/api/payments/stripe/webhook` to send `checkout.session.completed` and `checkout.session.async_payment_succeeded` events. Set its signing secret in `STRIPE_WEBHOOK_SECRET`. Stripe Checkout currently accepts card payments in ZMW.
