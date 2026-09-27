@@ -1,4 +1,4 @@
-# Abo-Abbas-grocery-System
+# Abo-Abbas-grocery-Prototype-System
 
 ## Checkout and Zambian Mobile Money
 
